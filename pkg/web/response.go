@@ -22,6 +22,10 @@ func Response(c *gin.Context, status int, data interface{}) {
 	c.JSON(status, response{Data: data})
 }
 
+func Success(c *gin.Context, status int, data interface{}) {
+	Response(c, status, response{Data: data})
+}
+
 func Error(c *gin.Context, status int, format string, args ...interface{}) {
 	err := errorResponse{
 		Code:    strings.ReplaceAll(strings.ToLower(http.StatusText(status)), " ", "_"),
