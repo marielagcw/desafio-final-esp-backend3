@@ -1,10 +1,13 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
 	"desafio-final/cmd/server/routes"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,21 +23,58 @@ func main() {
 		}
 	}()
 
+	// Connect to the database
+	db := connectDB()
+
 	// Router
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 
 	// Server
-	runApp(engine)
+	runApp(db, engine)
+
+	// Close database connection
+	defer db.Close()
+
 }
 
-func runApp(engine *gin.Engine) {
-	// Corremos el servidor
+/* --------------------------------- RUN APP -------------------------------- */
+func runApp(db *sql.DB, engine *gin.Engine) {
+	// Run the application
 	router := routes.NewRouter(engine)
-	// Mapeamos las rutas
+	// Map all routes
 	router.MapRoutes()
 	if err := engine.Run(port); err != nil {
 		panic(err)
 	}
 
+}
+
+/* -------------------------------- DATABASE -------------------------------- */
+func connectDB() *sql.DB {
+	var dbUsername, dbPassword, dbHost, dbPort, dbName string
+	dbUsername = "root"
+	dbPassword = "root"
+	dbHost = "localhost"
+	dbPort = "3306"
+	dbName = "db_desafio_final"
+
+	// Create data source
+	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", dbUsername, dbPassword, dbHost, dbPort, dbName)
+
+	// Open connection
+	db, err := sql.Open("mysql", dataSource)
+
+	// Check error
+	if err != nil {
+		panic(err)
+	}
+
+	// Check connection
+	if err := db.Ping(); err != nil {
+		panic(err)
+	}
+
+	// Return connection
+	return db
 }
