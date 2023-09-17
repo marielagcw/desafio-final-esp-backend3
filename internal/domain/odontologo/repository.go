@@ -22,7 +22,7 @@ func (r *repository) Create(ctx context.Context, odontologo Odontologo) (Odontol
 	statement, err := r.db.Prepare(QueryInsertOdontologo)
 
 	if err != nil {
-		return Odontologo{}, err
+		return Odontologo{}, ErrStatement
 	}
 
 	defer statement.Close()
@@ -34,12 +34,12 @@ func (r *repository) Create(ctx context.Context, odontologo Odontologo) (Odontol
 	)
 
 	if err != nil {
-		return Odontologo{}, err
+		return Odontologo{}, ErrExec
 	}
 
 	lastId, err := result.LastInsertId()
 	if err != nil {
-		return Odontologo{}, err
+		return Odontologo{}, ErrLastId
 	}
 
 	odontologo.ID = int(lastId)
