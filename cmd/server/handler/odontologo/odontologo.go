@@ -39,10 +39,7 @@ func (c *Controlador) Create() gin.HandlerFunc {
 			return
 		}
 		// If Status: OK - Created
-		web.Success(ctx, http.StatusCreated, gin.H{
-			"data": response,
-		})
-
+		web.Success(ctx, http.StatusCreated, response)
 	}
 
 }

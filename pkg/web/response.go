@@ -19,7 +19,7 @@ type errorResponse struct {
 }
 
 func Response(c *gin.Context, status int, data interface{}) {
-	c.JSON(status, response{Data: data})
+	c.JSON(status, data)
 }
 
 func Success(c *gin.Context, status int, data interface{}) {
