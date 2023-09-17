@@ -77,3 +77,35 @@ func (c *Controlador) GetById() gin.HandlerFunc {
 		web.Success(ctx, http.StatusOK, response)
 	}
 }
+
+/* ------------------------------- UPDATE ALL ------------------------------- */
+func (c *Controlador) Update() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		var request odontologo.RequestOdontologo
+
+		errBind := ctx.Bind(&request)
+
+		if errBind != nil {
+			web.Error(ctx, http.StatusBadRequest, "%s", "Bad Request")
+			return
+		}
+
+		id := ctx.Param("id")
+
+		idInt, err := strconv.Atoi(id)
+
+		if err != nil {
+			web.Error(ctx, http.StatusBadRequest, "%s", "Id Inválido")
+			return
+		}
+
+		response, err := c.service.Update(ctx, request, idInt)
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+
+		web.Success(ctx, http.StatusOK, response)
+	}
+}

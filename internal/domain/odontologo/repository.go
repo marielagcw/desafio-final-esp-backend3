@@ -97,4 +97,36 @@ func (r *repository) GetById(ctx context.Context, id int) (Odontologo, error) {
 	}
 
 	return odontologo, nil
-}	
+}
+
+/* --------------------------------- UPDATE ALL --------------------------------- */
+func (r *repository) Update(ctx context.Context, odontologo Odontologo) (Odontologo, error) {
+	statement, err := r.db.Prepare(QueryUpdateOdontologo)
+	if err != nil {
+		return Odontologo{}, ErrStatement
+	}
+
+	defer statement.Close()
+
+	result, err := statement.Exec(
+		odontologo.Nombre,
+		odontologo.Apellido,
+		odontologo.Matricula,
+		odontologo.ID,
+	)
+
+	if err != nil {
+		return Odontologo{}, ErrExec
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return Odontologo{}, err
+	}
+
+	if rowsAffected < 1 {
+		return Odontologo{}, ErrNotFound
+	}
+
+	return odontologo, nil
+}
