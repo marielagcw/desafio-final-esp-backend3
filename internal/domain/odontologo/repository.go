@@ -9,6 +9,7 @@ type repository struct {
 	db *sql.DB
 }
 
+// NewRepository creates a new repository
 func NewRepository(db *sql.DB) Repository {
 	return &repository{
 		db: db,
