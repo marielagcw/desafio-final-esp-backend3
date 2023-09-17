@@ -130,3 +130,33 @@ func (r *repository) Update(ctx context.Context, odontologo Odontologo) (Odontol
 
 	return odontologo, nil
 }
+
+/* -------------------------------- UPDATE NAME -------------------------------- */
+func (r *repository) UpdateName(ctx context.Context, odontologo Odontologo) (Odontologo, error) {
+	statement, err := r.db.Prepare(QueryUpdateNameOdontologo)
+	if err != nil {
+		return Odontologo{}, ErrStatement
+	}
+
+	defer statement.Close()
+
+	result, err := statement.Exec(
+		odontologo.Nombre,
+		odontologo.ID,
+	)
+
+	if err != nil {
+		return Odontologo{}, ErrExec
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return Odontologo{}, err
+	}
+
+	if rowsAffected < 1 {
+		return Odontologo{}, ErrNotFound
+	}
+
+	return odontologo, nil
+}
