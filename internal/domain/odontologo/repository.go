@@ -79,3 +79,22 @@ func (r *repository) GetAll(ctx context.Context) ([]Odontologo, error) {
 
 	return odontologos, nil
 }
+
+/* -------------------------------- GET BY ID ------------------------------- */
+func (r *repository) GetById(ctx context.Context, id int) (Odontologo, error) {
+	row := r.db.QueryRow(QueryGetByIdOdontologo, id)
+
+	var odontologo Odontologo
+	err := row.Scan(
+		&odontologo.ID,
+		&odontologo.Apellido,
+		&odontologo.Nombre,
+		&odontologo.Matricula,
+	)
+
+	if err != nil {
+		return Odontologo{}, err
+	}
+
+	return odontologo, nil
+}	

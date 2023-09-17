@@ -4,6 +4,7 @@ import (
 	odontologo "desafio-final/internal/domain/odontologo"
 	"desafio-final/pkg/web"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -55,5 +56,24 @@ func (c *Controlador) GetAll() gin.HandlerFunc {
 		}
 
 		web.Success(ctx, http.StatusOK, odontologos)
+	}
+}
+
+/* -------------------------------- GET BY ID ------------------------------- */
+func (c *Controlador) GetById() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil {
+			web.Error(ctx, http.StatusBadRequest, "%s", "Id Inválido")
+			return
+		}
+
+		response, err := c.service.GetById(ctx, id)
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+
+		web.Success(ctx, http.StatusOK, response)
 	}
 }
