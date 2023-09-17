@@ -12,6 +12,7 @@ type service struct {
 
 type Service interface {
 	Create(ctx context.Context, requestOdontologo RequestOdontologo) (Odontologo, error)
+	GetAll(ctx context.Context) ([]Odontologo, error)
 }
 
 // NewService creates a new odontologo service
@@ -38,4 +39,14 @@ func requestToOdontologo(requestOdontologo RequestOdontologo) Odontologo {
 	odontologo.Apellido = requestOdontologo.Apellido
 	odontologo.Matricula = requestOdontologo.Matricula
 	return odontologo
+}
+
+/* --------------------------------- GET ALL -------------------------------- */
+func (s *service) GetAll(ctx context.Context) ([]Odontologo, error) {
+	odontologos, err := s.repository.GetAll(ctx)
+	if err != nil {
+		log.Println("Error en el servicio: ", err.Error())
+		return []Odontologo{}, ErrEmptyList
+	}
+	return odontologos, nil
 }

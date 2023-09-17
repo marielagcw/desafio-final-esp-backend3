@@ -7,14 +7,15 @@ import (
 
 /* --------------------------------- ERRORS --------------------------------- */
 var (
-	ErrEmptyList = errors.New("the list is empty")
-	ErrNotFound  = errors.New("product not found")
+	ErrEmptyList = errors.New("The list is empty")
+	ErrNotFound  = errors.New("Odontologo not found")
 	ErrStatement = errors.New("Error Preparing Statement")
 	ErrExec      = errors.New("Error Execute Statement")
-	ErrLastId    = errors.New("Error getting last ID")
+	ErrLastId    = errors.New("Error Getting Last ID")
 )
 
 /* ------------------------------- REPOSITORY ------------------------------- */
 type Repository interface {
 	Create(ctx context.Context, odontologo Odontologo) (Odontologo, error)
+	GetAll(ctx context.Context) ([]Odontologo, error)
 }

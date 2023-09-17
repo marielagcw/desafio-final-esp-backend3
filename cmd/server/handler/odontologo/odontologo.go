@@ -43,3 +43,17 @@ func (c *Controlador) Create() gin.HandlerFunc {
 	}
 
 }
+
+/* --------------------------------- GET ALL -------------------------------- */
+func (c *Controlador) GetAll() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		odontologos, err := c.service.GetAll(ctx)
+
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+
+		web.Success(ctx, http.StatusOK, odontologos)
+	}
+}
