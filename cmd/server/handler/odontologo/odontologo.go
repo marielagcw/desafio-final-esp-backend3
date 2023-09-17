@@ -139,8 +139,29 @@ func (c *Controlador) UpdateName() gin.HandlerFunc {
 		}
 
 		web.Success(ctx, http.StatusOK, gin.H{
-			"id": response.ID,
+			"id":     response.ID,
 			"nombre": response.Nombre,
-		} )
+		})
+	}
+}
+
+/* --------------------------------- DELETE --------------------------------- */
+func (c *Controlador) Delete() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil {
+			web.Error(ctx, http.StatusBadRequest, "%s", "Id Inválido")
+			return
+		}
+
+		err = c.service.Delete(ctx, id)
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+
+		web.Success(ctx, http.StatusOK, gin.H{
+			"message": "Odontologo eliminado correctamente",
+		})
 	}
 }
