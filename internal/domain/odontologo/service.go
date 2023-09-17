@@ -15,6 +15,7 @@ type Service interface {
 	GetAll(ctx context.Context) ([]Odontologo, error)
 	GetById(ctx context.Context, id int) (Odontologo, error)
 	Update(ctx context.Context, requestOdontologo RequestOdontologo, id int) (Odontologo, error)
+	UpdateName(ctx context.Context, requestOdontologo RequestOdontologo, id int) (Odontologo, error)
 }
 
 // NewService creates a new odontologo service
@@ -68,6 +69,19 @@ func (s *service) Update(ctx context.Context, requestOdontologo RequestOdontolog
 	odontologo := requestToOdontologo(requestOdontologo)
 	odontologo.ID = id
 	response, err := s.repository.Update(ctx, odontologo)
+	if err != nil {
+		log.Println("Error en el servicio: ", err.Error())
+		return Odontologo{}, ErrNotFound
+	}
+
+	return response, nil
+}
+
+/* --------------------------------- UPDATE NAME --------------------------------- */
+func (s *service) UpdateName(ctx context.Context, requestOdontologo RequestOdontologo, id int) (Odontologo, error) {
+	odontologo := requestToOdontologo(requestOdontologo)
+	odontologo.ID = id
+	response, err := s.repository.UpdateName(ctx, odontologo)
 	if err != nil {
 		log.Println("Error en el servicio: ", err.Error())
 		return Odontologo{}, ErrNotFound
