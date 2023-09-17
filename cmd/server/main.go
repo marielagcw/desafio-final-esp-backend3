@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 const port = ":8080"
@@ -25,6 +26,12 @@ func main() {
 		}
 	}()
 
+	// Load the environment variables.
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Connect to the database
 	db := connectDB()
 
@@ -32,6 +39,7 @@ func main() {
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	engine.Use(middleware.Logger())
+	engine.Use(middleware.Authenticate())
 
 	// Server
 	runApp(db, engine)

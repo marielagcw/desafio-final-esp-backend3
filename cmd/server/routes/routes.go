@@ -5,6 +5,7 @@ import (
 	handlerOdontologo "desafio-final/cmd/server/handler/odontologo"
 	"desafio-final/cmd/server/handler/ping"
 	odontologo "desafio-final/internal/domain/odontologo"
+	"desafio-final/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,10 +60,10 @@ func (r *router) buildOdontologoRoutes() {
 	service := odontologo.NewService(repository)
 	odontologoController := handlerOdontologo.NewControladorOdontologo(service)
 
-	r.routerGroup.POST("/odontologos", odontologoController.Create())
-	r.routerGroup.GET("/odontologos", odontologoController.GetAll())
-	r.routerGroup.GET("/odontologos/:id", odontologoController.GetById())
-	r.routerGroup.PUT("/odontologos/:id", odontologoController.Update())
-	r.routerGroup.PATCH("/odontologos/:id", odontologoController.UpdateName())
-	r.routerGroup.DELETE("/odontologos/:id", odontologoController.Delete())
+	r.routerGroup.POST("/odontologos", middleware.Authenticate(), odontologoController.Create())
+	r.routerGroup.GET("/odontologos", middleware.Authenticate(), odontologoController.GetAll())
+	r.routerGroup.GET("/odontologos/:id", middleware.Authenticate(), odontologoController.GetById())
+	r.routerGroup.PUT("/odontologos/:id", middleware.Authenticate(), odontologoController.Update())
+	r.routerGroup.PATCH("/odontologos/:id", middleware.Authenticate(), odontologoController.UpdateName())
+	r.routerGroup.DELETE("/odontologos/:id", middleware.Authenticate(), odontologoController.Delete())
 }
