@@ -7,15 +7,39 @@ import (
 	"os"
 
 	"desafio-final/cmd/server/routes"
+	"desafio-final/docs"
 	"desafio-final/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 const port = ":8080"
 
+/* --------------------------------- SWAGGER -------------------------------- */
+//	@title			Desafio Final - Certified Tech developer
+//	@version		1.0
+//	@description	This is a proyect for Desafio Final
+//	@termsOfService	http://swagger.io/terms/
+
+//	@contact.name	API Support
+//	@contact.url	http://www.swagger.io/support
+//	@contact.email	support@swagger.io
+
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+
+//	@host		localhost:8080
+//	@BasePath	/api/v1
+
+//	@securityDefinitions.basic	BasicAuth
+
+// @externalDocs.description	OpenAPI
+// @externalDocs.url			https://swagger.io/resources/open-api/
 func main() {
 
 	// Recover from panic
@@ -40,6 +64,22 @@ func main() {
 	engine.Use(gin.Recovery())
 	engine.Use(middleware.Logger())
 	engine.Use(middleware.Authenticate())
+
+	/* --------------------------------- Swagger -------------------------------- */
+	// programmatically set swagger info
+	docs.SwaggerInfo.Title = "Swagger Example API"
+	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "petstore.swagger.io"
+	docs.SwaggerInfo.BasePath = "/v2"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+
+	r := gin.New()
+
+	// use ginSwagger middleware to serve the API docs
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	r.Run()
 
 	// Server
 	runApp(db, engine)
