@@ -64,4 +64,5 @@ func (r *router) buildOdontologoRoutes() {
 	r.routerGroup.GET("/odontologos/:id", odontologoController.GetById())
 	r.routerGroup.PUT("/odontologos/:id", odontologoController.Update())
 	r.routerGroup.PATCH("/odontologos/:id", odontologoController.UpdateName())
+	r.routerGroup.DELETE("/odontologos/:id", odontologoController.Delete())
 }

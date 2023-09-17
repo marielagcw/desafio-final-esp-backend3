@@ -16,6 +16,7 @@ type Service interface {
 	GetById(ctx context.Context, id int) (Odontologo, error)
 	Update(ctx context.Context, requestOdontologo RequestOdontologo, id int) (Odontologo, error)
 	UpdateName(ctx context.Context, requestOdontologo RequestOdontologo, id int) (Odontologo, error)
+	Delete(ctx context.Context, id int) error
 }
 
 // NewService creates a new odontologo service
@@ -34,14 +35,6 @@ func (s *service) Create(ctx context.Context, requestOdontologo RequestOdontolog
 		return Odontologo{}, errors.New("Error en el servicio - Método create")
 	}
 	return response, nil
-}
-
-func requestToOdontologo(requestOdontologo RequestOdontologo) Odontologo {
-	var odontologo Odontologo
-	odontologo.Nombre = requestOdontologo.Nombre
-	odontologo.Apellido = requestOdontologo.Apellido
-	odontologo.Matricula = requestOdontologo.Matricula
-	return odontologo
 }
 
 /* --------------------------------- GET ALL -------------------------------- */
@@ -88,4 +81,23 @@ func (s *service) UpdateName(ctx context.Context, requestOdontologo RequestOdont
 	}
 
 	return response, nil
+}
+
+/* --------------------------------- DELETE --------------------------------- */
+func (s *service) Delete(ctx context.Context, id int) error {
+	err := s.repository.Delete(ctx, id)
+	if err != nil {
+		log.Println("Error en el servicio: ", err.Error())
+		return ErrNotFound
+	}
+	return nil
+}
+
+/* --------------------------------- REQUEST -------------------------------- */
+func requestToOdontologo(requestOdontologo RequestOdontologo) Odontologo {
+	var odontologo Odontologo
+	odontologo.Nombre = requestOdontologo.Nombre
+	odontologo.Apellido = requestOdontologo.Apellido
+	odontologo.Matricula = requestOdontologo.Matricula
+	return odontologo
 }
