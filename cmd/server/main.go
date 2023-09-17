@@ -10,6 +10,7 @@ import (
 	"desafio-final/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const port = ":8080"
@@ -43,7 +44,7 @@ func main() {
 /* --------------------------------- RUN APP -------------------------------- */
 func runApp(db *sql.DB, engine *gin.Engine) {
 	// Run the application
-	router := routes.NewRouter(engine)
+	router := routes.NewRouter(engine, db)
 	// Map all routes
 	router.MapRoutes()
 	if err := engine.Run(port); err != nil {
