@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"desafio-final/cmd/server/routes"
+	"desafio-final/pkg/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,6 +25,7 @@ func main() {
 	// Router
 	engine := gin.New()
 	engine.Use(gin.Recovery())
+	engine.Use(middleware.Logger())
 
 	// Server
 	runApp(engine)
