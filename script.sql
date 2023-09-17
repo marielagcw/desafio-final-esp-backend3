@@ -3,15 +3,16 @@ CREATE DATABASE `db_desafio_final`;
 USE `db_desafio_final`;
 
 CREATE TABLE `odontologo` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `apellido` varchar(45) DEFAULT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `matricula` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+SELECT * FROM db_desafio_final.odontologo;
 
 CREATE TABLE `paciente` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `apellido` varchar(45) DEFAULT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `dni` int DEFAULT NULL,
@@ -20,8 +21,9 @@ CREATE TABLE `paciente` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
+
 CREATE TABLE `turno` (
-  `id` int NOT NULL,
+   `id` int NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
   `hora` time DEFAULT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
