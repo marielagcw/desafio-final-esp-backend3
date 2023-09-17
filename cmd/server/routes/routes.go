@@ -60,4 +60,6 @@ func (r *router) buildOdontologoRoutes() {
 	odontologoController := handlerOdontologo.NewControladorOdontologo(service)
 
 	r.routerGroup.POST("/odontologos", odontologoController.Create())
+	r.routerGroup.GET("/odontologos", odontologoController.GetAll())
+	r.routerGroup.GET("/odontologos/:id", odontologoController.GetById())
 }

@@ -22,7 +22,7 @@ func (r *repository) Create(ctx context.Context, odontologo Odontologo) (Odontol
 	statement, err := r.db.Prepare(QueryInsertOdontologo)
 
 	if err != nil {
-		return Odontologo{}, err
+		return Odontologo{}, ErrStatement
 	}
 
 	defer statement.Close()
@@ -34,15 +34,67 @@ func (r *repository) Create(ctx context.Context, odontologo Odontologo) (Odontol
 	)
 
 	if err != nil {
-		return Odontologo{}, err
+		return Odontologo{}, ErrExec
 	}
 
 	lastId, err := result.LastInsertId()
 	if err != nil {
-		return Odontologo{}, err
+		return Odontologo{}, ErrLastId
 	}
 
 	odontologo.ID = int(lastId)
 
 	return odontologo, nil
 }
+
+/* --------------------------------- GET ALL -------------------------------- */
+func (r *repository) GetAll(ctx context.Context) ([]Odontologo, error) {
+	rows, err := r.db.Query(QueryGetAllOdontologos)
+	if err != nil {
+		return []Odontologo{}, err
+	}
+
+	defer rows.Close()
+
+	var odontologos []Odontologo
+
+	for rows.Next() {
+		var odontologo Odontologo
+		err := rows.Scan(
+			&odontologo.ID,
+			&odontologo.Apellido,
+			&odontologo.Nombre,
+			&odontologo.Matricula,
+		)
+		if err != nil {
+			return []Odontologo{}, err
+		}
+
+		odontologos = append(odontologos, odontologo)
+	}
+
+	if err := rows.Err(); err != nil {
+		return []Odontologo{}, err
+	}
+
+	return odontologos, nil
+}
+
+/* -------------------------------- GET BY ID ------------------------------- */
+func (r *repository) GetById(ctx context.Context, id int) (Odontologo, error) {
+	row := r.db.QueryRow(QueryGetByIdOdontologo, id)
+
+	var odontologo Odontologo
+	err := row.Scan(
+		&odontologo.ID,
+		&odontologo.Apellido,
+		&odontologo.Nombre,
+		&odontologo.Matricula,
+	)
+
+	if err != nil {
+		return Odontologo{}, err
+	}
+
+	return odontologo, nil
+}	
