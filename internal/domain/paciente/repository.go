@@ -137,3 +137,23 @@ func (r *repository) Update(ctx context.Context, paciente Paciente) (Paciente, e
 
 	return paciente, nil
 }
+
+/* --------------------------------- DELETE --------------------------------- */
+func (r *repository) Delete(ctx context.Context, id int) error {
+
+	statement, err := r.db.Prepare(QueryDeletePaciente)
+
+	if err != nil {
+		return ErrStatement
+	}
+
+	defer statement.Close()
+
+	_, err = statement.Exec(id)
+
+	if err != nil {
+		return ErrExec
+	}
+
+	return nil
+}
