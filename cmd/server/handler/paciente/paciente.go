@@ -207,3 +207,39 @@ func (c *Controlador) Patch() gin.HandlerFunc {
 		web.Success(ctx, http.StatusOK, response)
 	}
 }
+
+/* --------------------------------- DELETE --------------------------------- */
+// Paciente godoc
+//	@Summary		paciente example
+//	@Description	Delete paciente by id
+//	@Tags			paciente
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path	int	true	"paciente id"
+//	@Success		200	{object}	Paciente
+//	@Failure		400	{object}	web.
+//	@Failure		500	{object}	web.
+//	@Router			/pacientes/{id} [delete]
+func (c *Controlador) Delete() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		id := ctx.Param("id")
+
+		parsedId, err := strconv.Atoi(id)
+
+		// If Status: Bad Request
+		if err != nil {
+			web.Error(ctx, http.StatusBadRequest, "%s", "Bad Request")
+			return
+		}
+
+		err = c.service.Delete(ctx, parsedId)
+		// If Status: Internal Server Error
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+		// If Status: No Content
+		ctx.Status(http.StatusNoContent)
+	}
+}

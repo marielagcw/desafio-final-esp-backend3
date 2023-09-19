@@ -16,6 +16,7 @@ type Service interface {
 	GetById(ctx context.Context, id int) (Paciente, error)
 	Update(ctx context.Context, id int, requestPaciente RequestPaciente) (Paciente, error)
 	Patch(ctx context.Context, id int, requestPaciente RequestPaciente) (Paciente, error)
+	Delete(ctx context.Context, id int) error
 }
 
 // NewService creates a new odontologo service
@@ -103,6 +104,21 @@ func (s *service) Patch(ctx context.Context, id int, requestPaciente RequestPaci
 		return Paciente{}, errors.New("error en el servicio - Método patch")
 	}
 	return response, nil
+}
+
+/* --------------------------------- DELETE --------------------------------- */
+func (s *service) Delete(ctx context.Context, id int) error {
+	_, err := s.repository.GetById(ctx, id)
+	if err != nil {
+		log.Println("Error en el servicio: ", err)
+		return errors.New("error en el servicio - Método delete")
+	}
+	err = s.repository.Delete(ctx, id)
+	if err != nil {
+		log.Println("Error en el servicio: ", err)
+		return errors.New("error en el servicio - Método delete")
+	}
+	return nil
 }
 
 /* --------------------------------- REQUEST TO PACIENTE -------------------------------- */
