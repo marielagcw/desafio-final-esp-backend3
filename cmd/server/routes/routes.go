@@ -74,7 +74,7 @@ func (r *router) buildOdontologoRoutes() {
 /* ------------------------------- PACIENTES ------------------------------ */
 // buildPacienteRoutes maps all routes for the paciente domain.
 func (r *router) buildPacienteRoutes() {
-	// Create a new odontologo controller.
+	// Create a new paciente controller.
 	repository := paciente.NewRepository(r.db)
 	service := paciente.NewService(repository)
 	odontologoController := handlerPaciente.NewControladorPaciente(service)
