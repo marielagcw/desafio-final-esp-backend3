@@ -77,7 +77,7 @@ func (r *router) buildPacienteRoutes() {
 	// Create a new paciente controller.
 	repository := paciente.NewRepository(r.db)
 	service := paciente.NewService(repository)
-	odontologoController := handlerPaciente.NewControladorPaciente(service)
+	pacienteController := handlerPaciente.NewControladorPaciente(service)
 
-	r.routerGroup.POST("/pacientes", middleware.Authenticate(), odontologoController.Create())
+	r.routerGroup.POST("/pacientes", middleware.Authenticate(), pacienteController.Create())
 }
