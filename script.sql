@@ -23,9 +23,9 @@ CREATE TABLE `paciente` (
 
 
 CREATE TABLE `turno` (
-   `id` int NOT NULL AUTO_INCREMENT,
-  `fecha` date DEFAULT NULL,
-  `hora` time DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `fecha` varchar(45) DEFAULT NULL,
+  `hora` varchar(45) DEFAULT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
   `odontologo_id` int NOT NULL,
   `paciente_id` int NOT NULL,
