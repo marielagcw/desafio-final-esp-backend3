@@ -87,3 +87,26 @@ func (r *repository) GetAll(ctx context.Context) ([]Paciente, error) {
 
 	return pacientes, nil
 }
+
+/* --------------------------------- GET BY ID ------------------------------- */
+func (r *repository) GetById(ctx context.Context, id int) (Paciente, error) {
+
+	row := r.db.QueryRow(QueryGetByIdPaciente, id)
+
+	var paciente Paciente
+
+	err := row.Scan(
+		&paciente.ID,
+		&paciente.Nombre,
+		&paciente.Apellido,
+		&paciente.Dni,
+		&paciente.Domicilio,
+		&paciente.FechaAlta,
+	)
+
+	if err != nil {
+		return Paciente{}, ErrExec
+	}
+
+	return paciente, nil
+}
