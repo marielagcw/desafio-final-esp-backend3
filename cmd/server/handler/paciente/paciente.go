@@ -4,6 +4,7 @@ import (
 	paciente "desafio-final/internal/domain/paciente"
 	"desafio-final/pkg/web"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -52,4 +53,65 @@ func (c *Controlador) Create() gin.HandlerFunc {
 		web.Success(ctx, http.StatusCreated, response)
 	}
 
+}
+
+/* --------------------------------- GET ALL -------------------------------- */
+// Paciente godoc
+//	@Summary		paciente example
+//	@Description	Get all pacientes
+//	@Tags			paciente
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	[]Paciente
+//	@Failure		400	{object}	web.error
+//	@Failure		500	{object}	web.
+//	@Router			/pacientes [get]
+func (c *Controlador) GetAll() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		response, err := c.service.GetAll(ctx)
+		// If Status: Internal Server Error
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+		// If Status: OK
+		web.Success(ctx, http.StatusOK, response)
+	}
+}
+
+/* --------------------------------- GET BY ID ------------------------------- */
+// Paciente godoc
+//	@Summary		paciente example
+//	@Description	Get paciente by id
+//	@Tags			paciente
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path	int	true	"paciente id"
+//	@Success		200	{object}	Paciente
+//	@Failure		400	{object}	web.
+//	@Failure		500	{object}	web.
+//	@Router			/pacientes/{id} [get]
+func (c *Controlador) GetById() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		id := ctx.Param("id")
+
+		parsedId, err := strconv.Atoi(id)
+
+		// If Status: Bad Request
+		if err != nil {
+			web.Error(ctx, http.StatusBadRequest, "%s", "Bad Request")
+			return
+		}
+
+		response, err := c.service.GetById(ctx, parsedId)
+		// If Status: Internal Server Error
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+		// If Status: OK
+		web.Success(ctx, http.StatusOK, response)
+	}
 }

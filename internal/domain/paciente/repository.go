@@ -48,3 +48,65 @@ func (r *repository) Create(ctx context.Context, paciente Paciente) (Paciente, e
 
 	return paciente, nil
 }
+
+/* --------------------------------- GET ALL -------------------------------- */
+func (r *repository) GetAll(ctx context.Context) ([]Paciente, error) {
+
+	rows, err := r.db.Query(QueryGetAllPaciente)
+
+	if err != nil {
+		return []Paciente{}, ErrStatement
+	}
+
+	defer rows.Close()
+
+	var pacientes []Paciente
+
+	for rows.Next() {
+		var paciente Paciente
+
+		err := rows.Scan(
+			&paciente.ID,
+			&paciente.Nombre,
+			&paciente.Apellido,
+			&paciente.Dni,
+			&paciente.Domicilio,
+			&paciente.FechaAlta,
+		)
+
+		if err != nil {
+			return []Paciente{}, ErrExec
+		}
+
+		pacientes = append(pacientes, paciente)
+	}
+
+	if len(pacientes) == 0 {
+		return []Paciente{}, ErrEmptyList
+	}
+
+	return pacientes, nil
+}
+
+/* --------------------------------- GET BY ID ------------------------------- */
+func (r *repository) GetById(ctx context.Context, id int) (Paciente, error) {
+
+	row := r.db.QueryRow(QueryGetByIdPaciente, id)
+
+	var paciente Paciente
+
+	err := row.Scan(
+		&paciente.ID,
+		&paciente.Nombre,
+		&paciente.Apellido,
+		&paciente.Dni,
+		&paciente.Domicilio,
+		&paciente.FechaAlta,
+	)
+
+	if err != nil {
+		return Paciente{}, ErrExec
+	}
+
+	return paciente, nil
+}
