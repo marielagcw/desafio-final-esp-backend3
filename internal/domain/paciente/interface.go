@@ -17,4 +17,5 @@ var (
 /* ------------------------------- REPOSITORY ------------------------------- */
 type Repository interface {
 	Create(ctx context.Context, paciente Paciente) (Paciente, error)
+	GetAll(ctx context.Context) ([]Paciente, error)
 }

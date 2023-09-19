@@ -53,3 +53,28 @@ func (c *Controlador) Create() gin.HandlerFunc {
 	}
 
 }
+
+/* --------------------------------- GET ALL -------------------------------- */
+// Paciente godoc
+//	@Summary		paciente example
+//	@Description	Get all pacientes
+//	@Tags			paciente
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	[]Paciente
+//	@Failure		400	{object}	web.error
+//	@Failure		500	{object}	web.
+//	@Router			/pacientes [get]
+func (c *Controlador) GetAll() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		response, err := c.service.GetAll(ctx)
+		// If Status: Internal Server Error
+		if err != nil {
+			web.Error(ctx, http.StatusInternalServerError, "%s", "Internal Server Error")
+			return
+		}
+		// If Status: OK
+		web.Success(ctx, http.StatusOK, response)
+	}
+}
