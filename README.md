@@ -1,6 +1,30 @@
 # Desafío final Especialidad Backend 3
 
-## Sistema de reserva de turnos
+# Instalación y Uso de la aplicación
+
+- Agregamos Docker Compose para correr la aplicación y levantar la base de datos en MySQL.
+
+Para buildear el proyecto ejecutamos
+
+```
+docker-compose build
+```
+y para correr el proyecto
+
+```
+docker-compose up
+```
+Para correr el proyecto sin Docker debemos modificar el valor de la variable `dbHost` de la _línea 105_ del `main` por `"localhost"`
+
+# Tecnologías utilizadas
+
+- Golang
+- MySQL
+- Docker
+
+# Sistema de reserva de turnos
+
+## Enunciado
 
 Se desea implementar una API que permita administrar la reserva de turnos para una clínica
 odontológica. Esta debe cumplir con los siguientes requerimientos:
@@ -40,3 +64,11 @@ La aplicación debe ser desarrollada en diseño orientado a paquetes:
 - *Capa de acceso a datos (base de datos):* es la base de datos de nuestro sistema. Podrás utilizar cualquier base de datos relacional modelado a través de un modelo entidad-relación, como H2 o MySQL, o no relacional, como MongoDB.
 - *Capa/dominio service.*
 - *Capa/dominio handler.*
+
+# Contribuciones
+
+- Goncalves Colaco Mariela		
+- Alarcon Pablo		
+- Lihuel		
+- Daniel Zemanate
+		
