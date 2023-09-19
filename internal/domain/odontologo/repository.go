@@ -3,6 +3,8 @@ package domain
 import (
 	"context"
 	"database/sql"
+
+	"desafio-final/pkg/errores"
 )
 
 type repository struct {
@@ -22,7 +24,7 @@ func (r *repository) Create(ctx context.Context, odontologo Odontologo) (Odontol
 	statement, err := r.db.Prepare(QueryInsertOdontologo)
 
 	if err != nil {
-		return Odontologo{}, ErrStatement
+		return Odontologo{}, errores.ErrStatement
 	}
 
 	defer statement.Close()
@@ -34,12 +36,12 @@ func (r *repository) Create(ctx context.Context, odontologo Odontologo) (Odontol
 	)
 
 	if err != nil {
-		return Odontologo{}, ErrExec
+		return Odontologo{}, errores.ErrExec
 	}
 
 	lastId, err := result.LastInsertId()
 	if err != nil {
-		return Odontologo{}, ErrLastId
+		return Odontologo{}, errores.ErrLastId
 	}
 
 	odontologo.ID = int(lastId)
@@ -103,7 +105,7 @@ func (r *repository) GetById(ctx context.Context, id int) (Odontologo, error) {
 func (r *repository) Update(ctx context.Context, odontologo Odontologo) (Odontologo, error) {
 	statement, err := r.db.Prepare(QueryUpdateOdontologo)
 	if err != nil {
-		return Odontologo{}, ErrStatement
+		return Odontologo{}, errores.ErrStatement
 	}
 
 	defer statement.Close()
@@ -116,7 +118,7 @@ func (r *repository) Update(ctx context.Context, odontologo Odontologo) (Odontol
 	)
 
 	if err != nil {
-		return Odontologo{}, ErrExec
+		return Odontologo{}, errores.ErrExec
 	}
 
 	rowsAffected, err := result.RowsAffected()
@@ -125,7 +127,7 @@ func (r *repository) Update(ctx context.Context, odontologo Odontologo) (Odontol
 	}
 
 	if rowsAffected < 1 {
-		return Odontologo{}, ErrNotFound
+		return Odontologo{}, errores.ErrNotFound
 	}
 
 	return odontologo, nil
@@ -135,7 +137,7 @@ func (r *repository) Update(ctx context.Context, odontologo Odontologo) (Odontol
 func (r *repository) UpdateName(ctx context.Context, odontologo Odontologo) (Odontologo, error) {
 	statement, err := r.db.Prepare(QueryUpdateNameOdontologo)
 	if err != nil {
-		return Odontologo{}, ErrStatement
+		return Odontologo{}, errores.ErrStatement
 	}
 
 	defer statement.Close()
@@ -146,7 +148,7 @@ func (r *repository) UpdateName(ctx context.Context, odontologo Odontologo) (Odo
 	)
 
 	if err != nil {
-		return Odontologo{}, ErrExec
+		return Odontologo{}, errores.ErrExec
 	}
 
 	rowsAffected, err := result.RowsAffected()
@@ -155,7 +157,7 @@ func (r *repository) UpdateName(ctx context.Context, odontologo Odontologo) (Odo
 	}
 
 	if rowsAffected < 1 {
-		return Odontologo{}, ErrNotFound
+		return Odontologo{}, errores.ErrNotFound
 	}
 
 	return odontologo, nil
@@ -174,7 +176,7 @@ func (r *repository) Delete(ctx context.Context, id int) error {
 	}
 
 	if rowsAffected < 1 {
-		return ErrNotFound
+		return errores.ErrNotFound
 	}
 
 	return nil

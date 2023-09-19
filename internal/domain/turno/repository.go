@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"health-center/pkg/errores"
+	"desafio-final/pkg/errores"
 )
 
 type repository struct {
