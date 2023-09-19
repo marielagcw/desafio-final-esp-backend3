@@ -74,12 +74,8 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/v2"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
-	r := gin.New()
-
 	// use ginSwagger middleware to serve the API docs
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	r.Run()
+	engine.GET("/swagger/*any", middleware.Authenticate(),ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Server
 	runApp(db, engine)
