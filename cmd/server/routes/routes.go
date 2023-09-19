@@ -3,8 +3,10 @@ package routes
 import (
 	"database/sql"
 	handlerOdontologo "desafio-final/cmd/server/handler/odontologo"
+	handlerPaciente "desafio-final/cmd/server/handler/paciente"
 	"desafio-final/cmd/server/handler/ping"
 	odontologo "desafio-final/internal/domain/odontologo"
+	paciente "desafio-final/internal/domain/paciente"
 	"desafio-final/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -35,6 +37,7 @@ func (r *router) MapRoutes() {
 	r.setGroup()
 	r.buildPingRoutes()
 	r.buildOdontologoRoutes()
+	r.buildPacienteRoutes()
 }
 
 /* --------------------------------- GROUPS --------------------------------- */
@@ -66,4 +69,15 @@ func (r *router) buildOdontologoRoutes() {
 	r.routerGroup.PUT("/odontologos/:id", middleware.Authenticate(), odontologoController.Update())
 	r.routerGroup.PATCH("/odontologos/:id", middleware.Authenticate(), odontologoController.UpdateName())
 	r.routerGroup.DELETE("/odontologos/:id", middleware.Authenticate(), odontologoController.Delete())
+}
+
+/* ------------------------------- PACIENTES ------------------------------ */
+// buildPacienteRoutes maps all routes for the paciente domain.
+func (r *router) buildPacienteRoutes() {
+	// Create a new odontologo controller.
+	repository := paciente.NewRepository(r.db)
+	service := paciente.NewService(repository)
+	odontologoController := handlerPaciente.NewControladorPaciente(service)
+
+	r.routerGroup.POST("/pacientes", middleware.Authenticate(), odontologoController.Create())
 }

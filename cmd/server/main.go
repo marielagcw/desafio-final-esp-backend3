@@ -75,7 +75,7 @@ func main() {
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	// use ginSwagger middleware to serve the API docs
-	engine.GET("/swagger/*any", middleware.Authenticate(),ginSwagger.WrapHandler(swaggerFiles.Handler))
+	engine.GET("/swagger/*any", middleware.Authenticate(), ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Server
 	runApp(db, engine)
