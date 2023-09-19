@@ -82,4 +82,5 @@ func (r *router) buildPacienteRoutes() {
 	r.routerGroup.POST("/pacientes", middleware.Authenticate(), pacienteController.Create())
 	r.routerGroup.GET("/pacientes", middleware.Authenticate(), pacienteController.GetAll())
 	r.routerGroup.GET("/pacientes/:id", middleware.Authenticate(), pacienteController.GetById())
+	r.routerGroup.PUT("/pacientes/:id", middleware.Authenticate(), pacienteController.Update())
 }

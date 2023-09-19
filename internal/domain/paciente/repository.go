@@ -110,3 +110,30 @@ func (r *repository) GetById(ctx context.Context, id int) (Paciente, error) {
 
 	return paciente, nil
 }
+
+/* --------------------------------- UPDATE --------------------------------- */
+func (r *repository) Update(ctx context.Context, paciente Paciente) (Paciente, error) {
+
+	statement, err := r.db.Prepare(QueryUpdatePaciente)
+
+	if err != nil {
+		return Paciente{}, ErrStatement
+	}
+
+	defer statement.Close()
+
+	_, err = statement.Exec(
+		paciente.Nombre,
+		paciente.Apellido,
+		paciente.Dni,
+		paciente.Domicilio,
+		paciente.FechaAlta,
+		paciente.ID,
+	)
+
+	if err != nil {
+		return Paciente{}, ErrExec
+	}
+
+	return paciente, nil
+}
