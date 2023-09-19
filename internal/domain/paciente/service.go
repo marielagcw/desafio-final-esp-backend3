@@ -14,6 +14,7 @@ type Service interface {
 	Create(ctx context.Context, requestPaciente RequestPaciente) (Paciente, error)
 	GetAll(ctx context.Context) ([]Paciente, error)
 	GetById(ctx context.Context, id int) (Paciente, error)
+	Update(ctx context.Context, id int, requestPaciente RequestPaciente) (Paciente, error)
 }
 
 // NewService creates a new odontologo service
@@ -50,6 +51,23 @@ func (s *service) GetById(ctx context.Context, id int) (Paciente, error) {
 	if err != nil {
 		log.Println("Error en el servicio: ", err)
 		return Paciente{}, errors.New("error en el servicio - Método getById")
+	}
+	return response, nil
+}
+
+/* --------------------------------- UPDATE --------------------------------- */
+func (s *service) Update(ctx context.Context, id int, requestPaciente RequestPaciente) (Paciente, error) {
+	oldPaciente, err := s.repository.GetById(ctx, id)
+	if err != nil {
+		log.Println("Error en el servicio: ", err)
+		return Paciente{}, errors.New("error en el servicio - Método update")
+	}
+	newPaciente := requestToPaciente(requestPaciente)
+	newPaciente.ID = oldPaciente.ID
+	response, err := s.repository.Update(ctx, newPaciente)
+	if err != nil {
+		log.Println("Error en el servicio: ", err)
+		return Paciente{}, errors.New("error en el servicio - Método update")
 	}
 	return response, nil
 }
