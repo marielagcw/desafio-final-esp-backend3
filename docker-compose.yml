@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mysql:
+    hostname: mysql
+    restart: always
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+    volumes:
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+      - my-datavolume:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  go_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+    restart: always
+    depends_on:
+      - mysql
+
+volumes:
+  my-datavolume:
+
+networks:
+  mynetwork:
