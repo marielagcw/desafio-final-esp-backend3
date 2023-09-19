@@ -1,8 +1,8 @@
 package turno
 
 import (
-	turno "health-center/internal/domain/turno"
-	"health-center/pkg/web"
+	turno "desafio-final/internal/domain/turno"
+	"desafio-final/pkg/web"
 	"net/http"
 	"strconv"
 

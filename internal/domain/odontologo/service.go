@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"log"
+
+	"desafio-final/pkg/errores"
 )
 
 type service struct {
@@ -42,7 +44,7 @@ func (s *service) GetAll(ctx context.Context) ([]Odontologo, error) {
 	odontologos, err := s.repository.GetAll(ctx)
 	if err != nil {
 		log.Println("Error en el servicio: ", err.Error())
-		return []Odontologo{}, ErrEmptyList
+		return []Odontologo{}, errores.ErrEmptyList
 	}
 	return odontologos, nil
 }
@@ -52,7 +54,7 @@ func (s *service) GetById(ctx context.Context, id int) (Odontologo, error) {
 	odontologo, err := s.repository.GetById(ctx, id)
 	if err != nil {
 		log.Println("Error en el servicio: ", err.Error())
-		return Odontologo{}, ErrNotFound
+		return Odontologo{}, errores.ErrNotFound
 	}
 	return odontologo, nil
 }
@@ -64,7 +66,7 @@ func (s *service) Update(ctx context.Context, requestOdontologo RequestOdontolog
 	response, err := s.repository.Update(ctx, odontologo)
 	if err != nil {
 		log.Println("Error en el servicio: ", err.Error())
-		return Odontologo{}, ErrNotFound
+		return Odontologo{}, errores.ErrNotFound
 	}
 
 	return response, nil
@@ -77,7 +79,7 @@ func (s *service) UpdateName(ctx context.Context, requestOdontologo RequestOdont
 	response, err := s.repository.UpdateName(ctx, odontologo)
 	if err != nil {
 		log.Println("Error en el servicio: ", err.Error())
-		return Odontologo{}, ErrNotFound
+		return Odontologo{}, errores.ErrNotFound
 	}
 
 	return response, nil
@@ -88,7 +90,7 @@ func (s *service) Delete(ctx context.Context, id int) error {
 	err := s.repository.Delete(ctx, id)
 	if err != nil {
 		log.Println("Error en el servicio: ", err.Error())
-		return ErrNotFound
+		return errores.ErrNotFound
 	}
 	return nil
 }
