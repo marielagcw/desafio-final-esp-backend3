@@ -69,6 +69,6 @@ La aplicación debe ser desarrollada en diseño orientado a paquetes:
 
 - Goncalves Colaco Mariela		
 - Alarcon Pablo		
-- Lihuel		
+- Lihuel Mujica		
 - Daniel Zemanate
 		
