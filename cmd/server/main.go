@@ -102,7 +102,7 @@ func connectDB() *sql.DB {
 	var dbUsername, dbPassword, dbHost, dbPort, dbName string
 	dbUsername = "root"
 	dbPassword = "root"
-	dbHost = "localhost"
+	dbHost = "mysql"
 	dbPort = "3306"
 	dbName = "db_desafio_final"
 
