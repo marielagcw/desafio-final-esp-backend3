@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "0cc9be34-a608-4be1-a77d-5ac005e8ed63",
+		"name": "Desafio-final-Backend3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18027182"
+	},
+	"item": [
+		{
+			"name": "Ping healthy",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1234",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": "localhost:8080/api/v1/ping"
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL Odontologos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/odontologos"
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL  Pacientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/pacientes"
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL  Turnos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/turnos"
+			},
+			"response": []
+		},
+		{
+			"name": "GET By ID Odontologos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/odontologos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "GET By ID Pacientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/pacientes/2"
+			},
+			"response": []
+		},
+		{
+			"name": "GET By ID Turnos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/turnos/2"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Odontologo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Nombre Test\",\r\n    \"apellido\": \"Apellido Test\",\r\n    \"matricula\": \"Test123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/odontologos"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Paciente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apellido\": \"00124\",\r\n    \"nombre\": \"Test\",\r\n    \"dni\": 123456,\r\n    \"domicilio\": \"domicilio\",\r\n    \"fecha_alta\": \"10-03-2023\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/pacientes"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Turno",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha\": \"10-05-2023\",\r\n    \"hora\": \"10:00\",\r\n    \"descripcion\": \"turno\",\r\n    \"odontologo_id\": 2,\r\n    \"paciente_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/turnos"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Odontologos",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Changes Name\",\r\n    \"apellido\": \"Change Lastname\",\r\n    \"matricula\": \"Change123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/odontologos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Pacientes",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apellido\": \"Tesst\",\r\n    \"nombre\": \"Test\",\r\n    \"dni\": 123456,\r\n    \"domicilio\": \"domicilio\",\r\n    \"fecha_alta\": \"10-03-2023\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/pacientes/1"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Turno",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha\": \"10-05-2023\",\r\n    \"hora\": \"10:00\",\r\n    \"descripcion\": \"12121\",\r\n    \"odontologo_id\": 2,\r\n    \"paciente_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/turnos/2"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Odontologos",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Patch Nombre\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/odontologos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT pacientes",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Patch Nombre\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/pacientes/1"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Turnos",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"descripcion\": \"Patch Nombre\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/turnos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Odontologo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "localhost:8080/api/v1/odontologos/3"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Paciente",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "localhost:8080/api/v1/pacientes/3"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Turnos",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "localhost:8080/api/v1/turnos/3"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "password123456",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
