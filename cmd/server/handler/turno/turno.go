@@ -161,7 +161,7 @@ func (c *Controlador) Update() gin.HandlerFunc {
 //	@Failure		400	{object}	web.errorResponse
 //	@Failure		500	{object}	web.errorResponse
 //	@Router			/turnos/:id [patch]
-func (c *Controlador) UpdateName() gin.HandlerFunc {
+func (c *Controlador) Patch() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		var request turno.RequestTurno

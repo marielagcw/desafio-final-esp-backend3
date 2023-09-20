@@ -29,7 +29,7 @@ func NewService(repository Repository) Service {
 
 /* --------------------------------- CREATE --------------------------------- */
 func (s *service) Create(ctx context.Context, requestTurno RequestTurno) (Turno, error) {
-	turno := requestToturno(requestTurno)
+	turno := requestToTurno(requestTurno)
 	response, err := s.repository.Create(ctx, turno)
 	if err != nil {
 		log.Println("Error en el servicio: ", err)
@@ -60,7 +60,7 @@ func (s *service) GetById(ctx context.Context, id int) (Turno, error) {
 
 /* ------------------------------- UPDATE ALL ------------------------------- */
 func (s *service) Update(ctx context.Context, requestTurno RequestTurno, id int) (Turno, error) {
-	turno := requestToturno(requestTurno)
+	turno := requestToTurno(requestTurno)
 	turno.ID = id
 	response, err := s.repository.Update(ctx, turno)
 	if err != nil {
@@ -73,7 +73,7 @@ func (s *service) Update(ctx context.Context, requestTurno RequestTurno, id int)
 
 /* --------------------------------- UPDATE DESCRIPCION --------------------------------- */
 func (s *service) UpdateDescripcion(ctx context.Context, requestTurno RequestTurno, id int) (Turno, error) {
-	turno := requestToturno(requestTurno)
+	turno := requestToTurno(requestTurno)
 	turno.ID = id
 	response, err := s.repository.UpdateDescripcion(ctx, turno)
 	if err != nil {
@@ -95,11 +95,13 @@ func (s *service) Delete(ctx context.Context, id int) error {
 }
 
 /* --------------------------------- REQUEST -------------------------------- */
-func requestToturno(requestTurno RequestTurno) Turno {
+func requestToTurno(requestTurno RequestTurno) Turno {
 	var turno Turno
 	turno.Descripcion = requestTurno.Descripcion
 	turno.Fecha = requestTurno.Fecha
 	turno.Hora = requestTurno.Hora
+	turno.OdontologoId = requestTurno.OdontologoId
+	turno.PacienteId = requestTurno.PacienteId
 
 	return turno
 }
