@@ -1,3 +1,16 @@
+### *Prerrequisitos para facilitar la puesta en marcha de la app*
+- Clonar el repositorio y ubicarse en la rama 'main'.
+- Tener Docker y Docker-Compose instalados previamente
+- Puerto de ejecución de app :8080 que puede ser modificado en la línea 21 del 'docker-compose.yml'
+
+### *Ejecución*
+- En una terminal, ubicado a nivel del archivo 'docker-compose.yml' ejecutar los comandos:
+    - docker-compose build
+    - docker-compose up
+- Si se desea correr la aplicación de manera local:
+    - Cambie la línea 105 del archivo 'main' al valor *dbHost = "localhost"*, deberá correr el archivo 'script.sql' manualmente en su motor de base de datos sql y cumplir los requisitos de conexión *'root:root'*
+    - En una terminal ubicado en la raíz del proyecto, ejecutar el comando *go run cmd/server/main.go*
+
 # Desafío final Especialidad Backend 3
 
 ## Sistema de reserva de turnos
