@@ -14,6 +14,7 @@ type Service interface {
 	Create(ctx context.Context, requestPaciente RequestPaciente) (Paciente, error)
 	GetAll(ctx context.Context) ([]Paciente, error)
 	GetById(ctx context.Context, id int) (Paciente, error)
+	GetByDni(ctx context.Context, dni int) (Paciente, error)
 	Update(ctx context.Context, id int, requestPaciente RequestPaciente) (Paciente, error)
 	Patch(ctx context.Context, id int, requestPaciente RequestPaciente) (Paciente, error)
 	Delete(ctx context.Context, id int) error
@@ -119,6 +120,16 @@ func (s *service) Delete(ctx context.Context, id int) error {
 		return errors.New("error en el servicio - Método delete")
 	}
 	return nil
+}
+
+/* --------------------------------- GET BY ID ------------------------------- */
+func (s *service) GetByDni(ctx context.Context, id int) (Paciente, error) {
+	response, err := s.repository.GetByDni(ctx, id)
+	if err != nil {
+		log.Println("Error en el servicio: ", err)
+		return Paciente{}, errors.New("error en el servicio - Método getByDni")
+	}
+	return response, nil
 }
 
 /* --------------------------------- REQUEST TO PACIENTE -------------------------------- */

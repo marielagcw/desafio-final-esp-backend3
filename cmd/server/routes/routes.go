@@ -10,6 +10,9 @@ import (
 	"desafio-final/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
+
+	handlerTurno "desafio-final/cmd/server/handler/turno"
+	turno "desafio-final/internal/domain/turno"
 )
 
 // Router interface defines the methods that any router must implement.
@@ -38,6 +41,7 @@ func (r *router) MapRoutes() {
 	r.buildPingRoutes()
 	r.buildOdontologoRoutes()
 	r.buildPacienteRoutes()
+	r.buildTurnoRoutes()
 }
 
 /* --------------------------------- GROUPS --------------------------------- */
@@ -85,4 +89,25 @@ func (r *router) buildPacienteRoutes() {
 	r.routerGroup.PUT("/pacientes/:id", middleware.Authenticate(), pacienteController.Update())
 	r.routerGroup.PATCH("/pacientes/:id", middleware.Authenticate(), pacienteController.Patch())
 	r.routerGroup.DELETE("/pacientes/:id", middleware.Authenticate(), pacienteController.Delete())
+}
+
+/* ------------------------------- TURNO ------------------------------ */
+// buildTurnoRoutes maps all routes for 'Turno' domain.
+func (r *router) buildTurnoRoutes() {
+	// Create a new turno controller.
+	repositoryOdontologo := odontologo.NewRepository(r.db)
+	serviceOdontologo := odontologo.NewService(repositoryOdontologo)
+	repositoryPaciente := paciente.NewRepository(r.db)
+	servicePaciente := paciente.NewService(repositoryPaciente)
+	repository := turno.NewRepository(r.db)
+	service := turno.NewService(repository, servicePaciente, serviceOdontologo)
+	turnoController := handlerTurno.NewControladorTurno(service)
+
+	r.routerGroup.POST("/turnos", middleware.Authenticate(), turnoController.Create())
+	r.routerGroup.GET("/turnos", middleware.Authenticate(), turnoController.GetAll())
+	r.routerGroup.GET("/turnos/:id", middleware.Authenticate(), turnoController.GetById())
+	r.routerGroup.PUT("/turnos/:id", middleware.Authenticate(), turnoController.Update())
+	r.routerGroup.DELETE("/turnos/:id", middleware.Authenticate(), turnoController.Delete())
+	r.routerGroup.GET("/turnos/paciente/:dni", middleware.Authenticate(), turnoController.GetAllByPacienteDni())
+
 }
